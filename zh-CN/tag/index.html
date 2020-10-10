@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en,zh-CN">
+<html lang="en,zh-cn">
 <head>
     <meta charset="UTF-8">
 <meta name="viewport"
@@ -12,6 +12,8 @@
 
     <meta name="description" content="Jason's Personal Blog. Tech, Travel and Life.">
 
+
+    <meta name="keywords" content="Big Data,Distributed System,Risk Management,Techical,Travel">
 
 
 <title>Tag | Jason&#39;s Blog</title>
@@ -35,6 +37,10 @@
     <script src="/js/script.js"></script>
     
     <script src="/js/tocbot.min.js"></script>
+    
+    <script src="/js/widget.js"></script>
+    
+    <script src="/js/easyXDM.min.js"></script>
     
 
 
@@ -73,7 +79,8 @@
         <div class="container">
             <div class="navbar-header">
                 <div>
-                    <a href="/">Jason&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                    <a href="/">Jason&#39;s Blog</a>
+                    <a id="mobile-toggle-theme">&nbsp;·&nbsp;Dark</a>
                 </div>
                 <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
             </div>
@@ -96,10 +103,10 @@
     var mobileBtn = function f() {
         var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
         var mobileMenu = document.getElementById("mobile-menu");
-        if(toggleMenu.classList.contains("active")){
+        if (toggleMenu.classList.contains("active")) {
            toggleMenu.classList.remove("active")
             mobileMenu.classList.remove("active")
-        }else{
+        } else {
             toggleMenu.classList.add("active")
             mobileMenu.classList.add("active")
         }
@@ -116,7 +123,7 @@
                 
                     <a href="/tags/Hexo/">Hexo<small>(1)</small></a>
                 
-                    <a href="/tags/Front-End/">Front-End<small>(1)</small></a>
+                    <a href="/tags/Front-end/">Front-end<small>(1)</small></a>
                 
             </div>
         </div>
@@ -126,7 +133,13 @@
         </div>
         <footer id="footer" class="footer">
     <div class="copyright">
-        <span>© Jason Ge Wu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+		<span>© <a href="/">Jason Ge Wu</a> | Powered by
+        	<a href="https://hexo.io" target="_blank">Hexo</a> 
+<!--        	& -->
+<!--        	<a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">-->
+<!--        		Chic-->
+<!--        	</a>-->
+        </span>
     </div>
 </footer>
 

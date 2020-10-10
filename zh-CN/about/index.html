@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en,zh-CN">
+<html lang="en,zh-cn">
 <head>
     <meta charset="UTF-8">
 <meta name="viewport"
@@ -12,6 +12,8 @@
 
     <meta name="description" content="Jason's Personal Blog. Tech, Travel and Life.">
 
+
+    <meta name="keywords" content="Big Data,Distributed System,Risk Management,Techical,Travel">
 
 
 <title>Jason Ge Wu | Jason&#39;s Blog</title>
@@ -35,6 +37,10 @@
     <script src="/js/script.js"></script>
     
     <script src="/js/tocbot.min.js"></script>
+    
+    <script src="/js/widget.js"></script>
+    
+    <script src="/js/easyXDM.min.js"></script>
     
 
 
@@ -73,7 +79,8 @@
         <div class="container">
             <div class="navbar-header">
                 <div>
-                    <a href="/">Jason&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                    <a href="/">Jason&#39;s Blog</a>
+                    <a id="mobile-toggle-theme">&nbsp;·&nbsp;Dark</a>
                 </div>
                 <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
             </div>
@@ -96,10 +103,10 @@
     var mobileBtn = function f() {
         var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
         var mobileMenu = document.getElementById("mobile-menu");
-        if(toggleMenu.classList.contains("active")){
+        if (toggleMenu.classList.contains("active")) {
            toggleMenu.classList.remove("active")
             mobileMenu.classList.remove("active")
-        }else{
+        } else {
             toggleMenu.classList.add("active")
             mobileMenu.classList.add("active")
         }
@@ -112,13 +119,13 @@
         <h2 class="post-title">Jason Ge Wu</h2>
         
         <section class="post-content">
-            <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Senior Software Development Engineer, Oracle Certified Professional Java Developer. Worked on PaaS cloud platform, distributed systems, big data analytics (OLAP / ETL), financial risk management &amp; anti-money laundering and IoT related products.</p>
+            <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Senior Software Development Engineer, Oracle Certified Professional Java Developer.<br>Worked on PaaS cloud platform, distributed systems, big data analytics (OLAP / ETL),<br>financial risk management, anti-money laundering and IoT related projects.</p>
 <h2 id="Contact"><a href="#Contact" class="headerlink" title="Contact"></a>Contact</h2><ul>
-<li><strong>Email</strong> : <a href="mailto:&#x6a;&#97;&#x73;&#111;&#110;&#x2e;&#103;&#101;&#46;&#119;&#117;&#64;&#x67;&#x6d;&#x61;&#105;&#108;&#x2e;&#99;&#111;&#x6d;">&#x6a;&#97;&#x73;&#111;&#110;&#x2e;&#103;&#101;&#46;&#119;&#117;&#64;&#x67;&#x6d;&#x61;&#105;&#108;&#x2e;&#99;&#111;&#x6d;</a></li>
+<li><strong>Email</strong> : <a href="mailto:&#x6a;&#97;&#115;&#x6f;&#x6e;&#46;&#x67;&#x65;&#x2e;&#119;&#117;&#64;&#x67;&#109;&#97;&#x69;&#108;&#x2e;&#x63;&#111;&#109;">&#x6a;&#97;&#115;&#x6f;&#x6e;&#46;&#x67;&#x65;&#x2e;&#119;&#117;&#64;&#x67;&#109;&#97;&#x69;&#108;&#x2e;&#x63;&#111;&#109;</a></li>
 <li>LinkedIn : <a target="_blank" rel="noopener" href="https://www.linkedin.com/in/ge-wu">https://www.linkedin.com/in/ge-wu</a></li>
 </ul>
 <h2 id="Note"><a href="#Note" class="headerlink" title="Note:"></a>Note:</h2><blockquote>
-<p>Life is not only about coding and work, but also fulfill with wonderful moments. Traveling thousands of miles, better than reading thousands of web-pages online.</p>
+<p>Life is not only about coding and work, but also fulfill with wonderful moments.<br>Traveling thousands of miles, better than reading thousands of web-pages online.</p>
 </blockquote>
 
         </section>
@@ -128,7 +135,13 @@
         </div>
         <footer id="footer" class="footer">
     <div class="copyright">
-        <span>© Jason Ge Wu | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+		<span>© <a href="/">Jason Ge Wu</a> | Powered by
+        	<a href="https://hexo.io" target="_blank">Hexo</a> 
+<!--        	& -->
+<!--        	<a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">-->
+<!--        		Chic-->
+<!--        	</a>-->
+        </span>
     </div>
 </footer>
 
