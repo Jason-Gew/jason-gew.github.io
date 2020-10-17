@@ -16,7 +16,7 @@
     <meta name="keywords" content="Big Data,Distributed System,Risk Management,Techical,Travel">
 
 
-<title>Archives: 2020 | Jason&#39;s Blog</title>
+<title>Message | Jason&#39;s Blog</title>
 
 
 
@@ -121,29 +121,53 @@
     }
 </script>
         <div class="main">
-            <br/>
-<div class="post-wrap" style="background-image: url('/image/posts.jpg');
-        background-repeat: no-repeat; background-size: 100% 100%; width: 100%; height: 110px">
-    <h2 class="post-title" style="text-align: center;">
-        -&nbsp;Posts&nbsp;-
-    </h2>
-</div>
-<div class="post-wrap archive">
+            <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<!--<script src="/js/busuanzi.pure.js"></script>-->
+<div class="container">
+    <div class="post-wrap">
+        <h2 class="post-title" style="text-align: center; font-size: 2em; line-height: 1.5em;">
+            - Messages -
+        </h2>
+        <img src='/image/leave-message.jpg' alt="Please-Leave-A-Message"
+             style="width:100%; height:100%;">
 
-    
-    
-        
-
-        
-            <h3>2020</h3>
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/10/01/Build-Personal-Blog/">Use Hexo to Build Personal Blog</a>
-            <span class="archive-item-date">2020-10-01</span>
+        <article>
+            <p style="font-size: 110%">
+                If you have any <b>interesting ideas 🍹</b>, <b>comments on blog posts ✍️</b> and
+                <b>project cooperation requirements 🤝</b>,
+                please leave a message below at any time. 😃
+            </p>
         </article>
-    
-    
+        <br/>
+
+        <div id="vistor-count" style="text-align: center; font-size: 90%;">
+            <span id="busuanzi_container_site_pv" >
+                👉 Total Visitors:
+                <span id="busuanzi_value_site_pv"></span>
+                <span class="post-meta-divider">&nbsp;|&nbsp;</span>
+            </span>
+            <span id="busuanzi_container_site_uv" style="display:none">
+                Page Visitors:
+                <span id="busuanzi_value_site_uv"></span>
+                 👈
+            </span>
+        </div>
+        <br/>
+        <div id="vcomments" >
+        </div>
+        <script async="async">
+            new Valine({
+                el: '#vcomments',
+                path: window.location.pathname,
+                appId: 'xavRfmuNYmLco6QK1YiAB9h1-MdYXbMMI',
+                appKey: 'I0VsWAoacf86m5rNoGvhChfE',
+                lang: 'en',
+                avatar: 'robohash',
+                placeholder: 'Please Leave Your Message ~',
+                enableQQ: true,
+            })
+        </script>
+    </div>
 </div>
         </div>
         <footer id="footer" class="footer">

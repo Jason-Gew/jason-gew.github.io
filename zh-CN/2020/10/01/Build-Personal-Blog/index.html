@@ -42,6 +42,8 @@
     
     <script src="/js/easyXDM.min.js"></script>
     
+    <script src="/js/busuanzi.pure.js"></script>
+    
 
 
 
@@ -57,8 +59,10 @@
         <header>
     <nav class="navbar">
         <div class="container">
-            <div class="navbar-header header-logo"><a href="/">Jason&#39;s Blog</a></div>
-            <div class="menu navbar-right">
+            <div class="navbar-header header-logo">
+                <a href="/" style="font-weight: bold">Jason&#39;s Blog</a>
+            </div>
+            <div class="menu navbar-right" style="font-weight: bold">
                 
                     <a class="menu-item" href="/archives">Posts</a>
                 
@@ -67,6 +71,8 @@
                     <a class="menu-item" href="/tag">Tags</a>
                 
                     <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/message">Msgs</a>
                 
                 <input id="switch_default" type="checkbox" class="switch_default">
                 <label for="switch_default" class="toggleBtn"></label>
@@ -93,6 +99,8 @@
                     <a class="menu-item" href="/tag">Tags</a>
                 
                     <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/message">Msgs</a>
                 
             </div>
         </div>
@@ -198,7 +206,7 @@
                     <br />
                     
                         <span class="post-category">
-                    Category:
+                        Category:
                             
                                 <a href="/categories/Tech/">Tech</a>
                             
@@ -236,27 +244,35 @@
             <section class="post-copyright">
                 
                     <p class="copyright-item">
-                        <span>Author:</span>
+                        <span><i>Author:</i></span>&nbsp;
                         <span>Jason Ge Wu</span>
                     </p>
                 
                 
                 
                     <p class="copyright-item">
-                        <span>License:</span>
-                        <span>Copyright (c) 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                        <span><i>License:</i></span>&nbsp;
+                        <span><a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
                     </p>
                 
+                
+                
+                    <span id="busuanzi_container_site_uv" style="display:none">
+                        <i>Visitors:</i>&nbsp;
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
                 
                 
             </section>
         
         <br/>
         
+        
             <div id="wpac-rating" style="text-align:center;"></div>
             <script type="text/javascript">
+                const dataId = parseInt('27639');
                 wpac_init = window.wpac_init || [];
-                wpac_init.push({widget: 'Rating', id: 27639});
+                wpac_init.push({widget: 'Rating', id: dataId});
                 (function() {
                     if ('WIDGETPACK_LOADED' in window) return;
                     WIDGETPACK_LOADED = true;
@@ -295,20 +311,23 @@
         </section>
 
         
-        <div id="wpac-comment"></div>
-        <script type="text/javascript">
-            wpac_init = window.wpac_init || [];
-            wpac_init.push({widget: 'Comment', id: 27639});
-            (function() {
-                if ('WIDGETPACK_LOADED' in window) return;
-                WIDGETPACK_LOADED = true;
-                var mc = document.createElement('script');
-                mc.type = 'text/javascript';
-                mc.async = true;
-                mc.src = 'https://embed.widgetpack.com/widget.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
-            })();
-        </script>
+        
+        
+        <div id="lv-container" style="text-align: center" data-id="city"
+             data-uid="MTAyMC81MTcyNC8yODIwNQ==">
+            <script type="text/javascript">
+                (function(d, s) {
+                    var j, e = d.getElementsByTagName(s)[0];
+                    if (typeof LivereTower === 'function') {
+                        return;
+                    }
+                    j = d.createElement(s);
+                    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                    j.async = true;
+                    e.parentNode.insertBefore(j, e);
+                })(document, 'script');
+            </script>
+        </div>
         
     </article>
 </div>
@@ -317,11 +336,7 @@
         <footer id="footer" class="footer">
     <div class="copyright">
 		<span>© <a href="/">Jason Ge Wu</a> | Powered by
-        	<a href="https://hexo.io" target="_blank">Hexo</a> 
-<!--        	& -->
-<!--        	<a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">-->
-<!--        		Chic-->
-<!--        	</a>-->
+        	<a href="https://hexo.io" target="_blank">Hexo</a>
         </span>
     </div>
 </footer>
