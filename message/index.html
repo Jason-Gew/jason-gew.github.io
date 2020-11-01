@@ -125,21 +125,25 @@
 <!--<script src="/js/busuanzi.pure.js"></script>-->
 <div class="container">
     <div class="post-wrap">
-        <h2 class="post-title" style="text-align: center;">
-            - Messages -
+        <h2 class="post-title" ondragstart="return false;" onContextMenu="return false;" style="text-align: center;
+                background-image: url('/image/notes.jpg'); background-size: 100% 100%;
+                background-repeat: no-repeat; width: 100%; height: 130px; margin-top: -0.3em;">
+            <br/>- Messages -
         </h2>
-        <img src='/image/leave-message.jpg' alt="Please-Leave-A-Message"
-             style="width:100%; height:100%;">
 
-        <article>
-            <p style="font-size: 110%;">
+        <article style="font-size: 110%;">
+            <p>
+               <b>Jason: "👋 Welcome to Jason's Blog!"</b>
+            </p>
+            <p>
                 If you have any <b>interesting ideas 🍹</b>, <b>comments on blog posts 🖋️</b> and
                 <b>project cooperation requirements 🤝</b>,
                 please leave a message below at any time. 😎
             </p>
-
-            <p style="font-size: 110%; color: dodgerblue;">
-                Don't forget to use the correct Email, so that I can catch up with you later.
+            <img src='/image/leave-message.jpg' alt="Please-Leave-A-Message"
+                 style="width:100%;">
+            <p style="color: dodgerblue;">
+                Don't forget to use the correct Email, so that I can catch up with you later~
             </p>
         </article>
         <br/>
@@ -167,7 +171,7 @@
                 appKey: 'I0VsWAoacf86m5rNoGvhChfE',
                 lang: 'en',
                 avatar: 'robohash',
-                placeholder: '~ Please Leave Your Message ~',
+                placeholder: 'Please Leave Your Message',
                 enableQQ: true,
                 requiredFields: ['nick','mail'],
             })
