@@ -121,7 +121,8 @@
     }
 </script>
         <div class="main">
-            <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+            <script src="//code.bdstatic.com/npm/leancloud-storage@4.12.2/dist/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
 <!--<script src="/js/busuanzi.pure.js"></script>-->
 <div class="container">
     <div class="post-wrap">
@@ -179,10 +180,12 @@
                 appKey: 'I0VsWAoacf86m5rNoGvhChfE',
                 lang: 'en',
                 avatar: 'robohash',
-                placeholder: 'Please Leave Your Message',
+                placeholder: 'Please leave your message...',
                 enableQQ: true,
                 requiredFields: ['nick','mail'],
-            })
+                visitor: true,
+                serverURLs: 'https://xavrfmun.api.lncldglobal.com'
+            });
         </script>
     </div>
 </div>
