@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en,zh-cn">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Jason Ge Wu">
+
+
+
+    <meta name="description" content="Jason's Personal Blog. Tech, Travel and Life.">
+
+
+    <meta name="keywords" content="Jason Ge Wu,Jason-Gew,Big Data,Distributed System,Risk Management,Technology,Travel">
+
+
+<title>Hadoop Distributed File System (分布式文件系统) | Jason Ge Wu</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+    <script src="/js/widget.js"></script>
+    
+    <script src="/js/easyXDM.min.js"></script>
+    
+    <script src="/js/busuanzi.pure.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo">
+                <a href="/" style="font-weight: bold">Jason&#39;s Blog</a>
+            </div>
+            <div class="menu navbar-right" style="font-weight: bold">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/message">Msgs</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Jason&#39;s Blog</a>
+                    <a id="mobile-toggle-theme">&nbsp;·&nbsp;Dark</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/message">Msgs</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if (toggleMenu.classList.contains("active")) {
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        } else {
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <br/>
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand All</a>
+        <a onclick="go_top()">Go Top</a>
+        <a onclick="go_bottom()">Go Bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse All"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand All"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Hadoop Distributed File System (分布式文件系统)</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" >Jason Ge Wu</a>
+                    
+                    <br />
+                    
+                        <span class="post-time">
+                        Date: <a href="#">2021-11-02&nbsp;
+                                &nbsp;22:16:36</a>
+                        </span>
+                    
+                    <br />
+                    
+                        <span class="post-category">
+                        Category:
+                            
+                                <a href="/categories/Tech/">Tech</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <div style="text-align: center">
+    <p style="color:OrangeRed;font-weight: bold">本文基于Hadoop 3.X</p>
+</div>
+
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Hadoop 分布式文件系统 (<a target="_blank" rel="noopener" href="https://hadoop.apache.org/docs/r3.1.1/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html">HDFS</a>) , 参考GFS论文 <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/papers/gfs.pdf" title="The Google File System">^1</a><br>是一种具备高度容错性和高吞吐量的分布式文件系统，可部署在中低端服务器上。HDFS 适合一次写入，多次读取且无需进行文件随机修改的场景。适合作为数据分析，不适合用做网盘应用， 更不适用于低延时的数据访问。因此，降低POSIX一小部分关键定义可获得更好的数据吞吐量。</p>
+<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><p>HDFS 采用 Master / Slave 的架构来存储数据，主要由四个部分组成，分别为 HDFS Client、NameNode、Secondary NameNode 以及 DataNode。<br>HDFS集群是由一个NameNode （可支持1个StandBy）和多个DataNode组成的。NameNode是一个中心服务，负责管理文件系统的命名空间 (Namespace，MetaData等) 及客户端对文件的访问。<br>集群中一般由一个独立节点运行一个DataNode进程，负责管理它所在节点上的存储。</p>
+<p><img src="https://lc-gluttony.s3.amazonaws.com/xavRfmuNYmLc/zSOXmS6AOTyUxOXhSeN9aoBnhzjGEMoa/HDFS-Architecture.jpg" 
+     alt="HDFS-Architecture" ondragstart="return false;" onContextMenu="return false;" style="zoom:85%" /></p>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><ul>
+<li><strong>优点</strong></li>
+</ul>
+<ol>
+<li>高容错性：数据自动保存多个副本（文件将被分块），存放于多个节点，若一个副本丢失，可从其他副本中恢复。</li>
+<li>大数据容量：可支持TB，PB等更高的容量；以及百万规模以上的文件数量。</li>
+<li>强一致性：流式数据访问，一次写入，多次读取，只支持追加。</li>
+<li>兼容性高：可适用于普通 / 廉价机器，用于副本存储，提高可靠性。</li>
+</ol>
+<ul>
+<li><strong>缺点</strong></li>
+</ul>
+<ol>
+<li>延时性：不支持低延时的数据访问（毫秒级）。</li>
+<li>小文件存储：无法高效的针对大量小文件的存储。</li>
+<li>随机修改：不支持并发写入以及随机修改。</li>
+</ol>
+<h2 id="组成模块"><a href="#组成模块" class="headerlink" title="组成模块"></a>组成模块</h2><h3 id="NameNode"><a href="#NameNode" class="headerlink" title="NameNode"></a>NameNode</h3><p>NameNode是HDFS架构中的Master节点，为中心服务器，负责管理整个分布式文件系统的命名空间和客户端对文件的访问。 NameNode并不保存文件的内容，只保存文件的元数据（文件名称，所在目录，权限，拥有者，文件块数量，副本数量，文件块所在节点）。</p>
+<p>Namenode全权管理数据块的复制，周期性的从集群中的每个Datanode接收<strong>心跳信号</strong>和<strong>块状态报告</strong>。<br><strong>心跳信号</strong>：意味着该Datanode节点工作正常<br><strong>块状态报告</strong>：包含了一个该Datanode上所有数据块的列表</p>
+<h3 id="Secondary-NameNode"><a href="#Secondary-NameNode" class="headerlink" title="Secondary NameNode"></a>Secondary NameNode</h3><p>Secondary NameNode 辅助 NameNode 工作（非NameNode热备份）。主要协助将fsimage, editor log合并成 fsimage 并推送NameNode。</p>
+<ul>
+<li>辅助NameNode，分担部分工作。</li>
+<li>定期合并 fsimage 和 edits 日志，将edits日志文件大小控制在一定限度；将新的 fsimage 推送给 NameNode。</li>
+<li>在紧急情况下，可辅助恢复 NameNode。</li>
+</ul>
+<p>fsimage: HDFS文件系统元数据的一个永久性检查点。包含整个文件系统所有目录和inode的序列化信息。</p>
+<p>edits：存放HDFS文件系统所有更新操作记录。</p>
+<p>checkpoint：在一定周期（默认3600s）或者操作次数达到最大限制（默认100万）。</p>
+<h3 id="DataNode"><a href="#DataNode" class="headerlink" title="DataNode"></a>DataNode</h3><p>DataNode是HDFS架构中的Slaver节点，负责接收NameNode命令以及实际文件存储和操作。</p>
+<ul>
+<li>数据块存储。</li>
+<li>数据读取，写入，删除等操作。</li>
+</ul>
+<h3 id="HDFS-Client"><a href="#HDFS-Client" class="headerlink" title="HDFS Client"></a>HDFS Client</h3><p>HDFS Client主要负责远端对HDFS文件的操作交互。</p>
+<ul>
+<li>文件切分：文件上传 HDFS 的时候，Client 将原始文件切分成多个Block，然后进行存储。</li>
+<li>与NameNode交互，获取文件的元信息。</li>
+<li>与DataNode交互，读取或写入数据。</li>
+<li>支持HDFS管理或其他操作。</li>
+</ul>
+<h3 id="Block"><a href="#Block" class="headerlink" title="Block"></a>Block</h3><p>HDFS中的文件在物理磁盘上以存储块（Block）存储。HDFS的块比磁盘的块大，主要是为了最小化寻址开销。如果块设置得足够大，从磁盘传输数据的时间会明显大于定位这个块开始位置所需的时间。因而，传输一个由多个块组成的文件的时间取决于磁盘传输速率。</p>
+<p><strong>HDFS块大小设置主要取决于磁盘读写速率。</strong>通常128M 或 256Ｍ。可根据 <em>dfs.blocksize</em> 设置</p>
+<blockquote>
+<p>HDFS Block不可设置过小或者过大。设置过小会增加寻址时间以及NameNode元信息数据量。设置过大则会导致磁盘传输数据时间增高。</p>
+</blockquote>
+<h2 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h2><h3 id="HDFS文件读取"><a href="#HDFS文件读取" class="headerlink" title="HDFS文件读取"></a>HDFS文件读取</h3><p><img src="https://lc-gluttony.s3.amazonaws.com/xavRfmuNYmLc/uKACc8KhoibPnyHEn0FBmDmrbxOzsCS6/HDFS-File-Read.png" 
+     alt="HDFS-Read-Flow" ondragstart="return false;" onContextMenu="return false;" style="zoom: 60%;"/></p>
+<ol>
+<li><p>客户端调用 <strong>DistributedFileSystem</strong> 实例的 open 方法请求读取文件。</p>
+</li>
+<li><p>DistributedFileSystem 通过RPC调用 NameNode 以获得该文件对应的数据块所在的 location，包括这个文件的副本信息等元数据 (各块所在DataNode的地址) 。</p>
+</li>
+<li><p>打开输入流 <strong>FSDataInputStream</strong> 之后，客户端调用 read 方法读取数据。 选择最近的 DataNode 建立连接并读取数据。</p>
+</li>
+<li><p>DataNode 传输数据给客户端（从磁盘里面读取数据输入流，以Packet为单位来做校验）,客户端先缓存至本地，最后写入目标文件</p>
+</li>
+<li><p>若文件分为多块存储，则按串行读取方式，读取所有块信息。 若节点负载过大，也会由负载均衡从其他 DataNode 中读取。</p>
+</li>
+<li><p>客户端调用 close 方法, 关闭输入流 <strong>FSDataInputStream</strong>。</p>
+</li>
+</ol>
+<h3 id="HDFS文件写入"><a href="#HDFS文件写入" class="headerlink" title="HDFS文件写入"></a>HDFS文件写入</h3><p><img src="https://lc-gluttony.s3.amazonaws.com/xavRfmuNYmLc/yhzLHtXOHTChUeQY0MiV9Rwk4txOY8IQ/HDFS-Write-Flow.jpg" 
+     alt="HDFS-Write-Flow" ondragstart="return false;" onContextMenu="return false;" style="zoom:38%;"/></p>
+<ol>
+<li>客户端调用 <strong>DistributedFileSystem</strong> 的 create 方法请求创建文件。</li>
+<li>DistributedFileSystem 通过 RPC 调用 NameNode，NameNode在元数据检查通过后将创建一条记录（在edits log中）。</li>
+<li>DistributedFileSystem 返回 <strong>FSDataOutputStream</strong> 给客户端用于数据流写入，FSDataOutputStream 封装了一个DFSOutputStream 用于客户端与 DataNode，NameNode间的通信。客户端 <strong>DFSOutputStream</strong> 将文件切分成多个 packets，并在内部以数据队列”Data Queue”的形式管理 packets。</li>
+<li>客户端向 NameNode 申请 Block 和用来存储 replicas 的 DataNode 列表。 DataStreamer 会处理接受”Data Queue”并将数据以流方式写入DataNode。其中第一个 DataNode 将 packet 写入成功后，会传递给在 pipeline 中的下一个 DataNode，直到最后一个。 只要dfs.replication.min的副本 (默认是1) 写入完成，写操作即成功）</li>
+<li>最后一个 DataNode 存储成功之后将返回 ack packet 并通过 pipeline 传递至客户端。 在客户端的内部同样维护的”Ack Queue”在收到 DataNode 返回的 ack packet 后从”Data Queue”中移除相应的 packet。</li>
+<li>客户端调用 close 方法关闭 <strong>FSDataOutputStream</strong>。</li>
+<li>发送完成信号给 NameNode。</li>
+</ol>
+<h3 id="Edits-Log与Fsimage合并流程："><a href="#Edits-Log与Fsimage合并流程：" class="headerlink" title="Edits Log与Fsimage合并流程："></a>Edits Log与Fsimage合并流程：</h3><p><img src="https://lc-gluttony.s3.amazonaws.com/xavRfmuNYmLc/kUi70IVcnHJiUaaNvViHbov0YTMNTYki/NN-and-Secondary-NN.png" 
+     alt="NN-and-Secondary-NN" ondragstart="return false;" onContextMenu="return false;" style="zoom:70%;" /></p>
+<ol>
+<li><p>NameNode将更新记录写入一个新的 edit.new 文件。</p>
+</li>
+<li><p>NameNode通过Http协议将fsimage和editlog发送至Secondary NameNode。</p>
+</li>
+<li><p>Secondary NameNode将fsimage与editlog合并，生成一个新的 fsimage.ckpt文件。该过程比较耗时，若在NameNode进行，可导致系统卡顿。</p>
+</li>
+<li><p>Secondary NameNode将生成的 fsimage.ckpt 通过Http协议发送至NameNode。</p>
+</li>
+<li><p>NameNode 重命名 fsimage.ckpt 为 fsimage，edits.new 为 edit。</p>
+</li>
+</ol>
+<h2 id="API"><a href="#API" class="headerlink" title="API"></a>API</h2><p>详情参考以下Class</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hadoop-common<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;hadoop.client.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@InterfaceAudience</span>.Public</span><br><span class="line"><span class="meta">@InterfaceStability</span>.Stable</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">FileSystem</span> <span class="keyword">extends</span> <span class="title">Configured</span> <span class="keyword">implements</span> <span class="title">Closeable</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ----</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DistributedFileSystem</span> <span class="keyword">extends</span> <span class="title">FileSystem</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ----</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="HDFS的可用性问题"><a href="#HDFS的可用性问题" class="headerlink" title="HDFS的可用性问题"></a>HDFS的可用性问题</h3><p>在HDFS集群中，NameNode 依然是单点故障 (SPOF: Single Point Of Failure)。元数据同时写到多个文件系统以及Second NameNode定期checkpoint有利于保护数据丢失，但是并不能提高可用性。<br><em>这是因为 <strong>NameNode</strong>是唯一一个对文件元数据和 file-block 映射负责的地方， 当它挂了之后，包括MapReduce在内的作业都无法进行读写。</em></p>
+<h3 id="Hadoop高可用-HA-方案"><a href="#Hadoop高可用-HA-方案" class="headerlink" title="Hadoop高可用 (HA)方案"></a>Hadoop高可用 (HA)方案</h3><p><strong>采用HA的HDFS集群配置2个NameNode</strong>，分别处于<strong>Active</strong>和<strong>Standby</strong>状态。当Active NameNode故障之后，Standby接过责任继续提供服务，用户没有明显的中断感觉，一般耗时在几十秒到数分钟。<br>HA涉及到的主要实现逻辑有</p>
+<ol>
+<li><p><strong>主备需共享Edits Log存储</strong><br>主NameNode和待命的NameNode共享一份edits log，当主备切换时，Standby通过回放edits log同步数据。 <strong>共享存储通常有2种选择</strong>：</p>
+<ul>
+<li><p>NFS：传统的网络文件系统</p>
+</li>
+<li><p>QJM：Quorum Journal Manager</p>
+</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>QJM 是专门为HDFS的HA实现而设计的，用来提供高可用的edits log。QJM运行一组journal node，edits log必须写到大部分的 Journal Nodes。通常使用3个节点，因此允许一个节点失败，类似ZooKeeper。注意QJM没有使用ZK，虽然HDFS HA的确使用了ZK来选举主Namenode，但一般推荐使用QJM。</p>
+</blockquote>
+<ol start="2">
+<li><p><strong>DataNode 需要同时往主备发送 Block Report</strong><br>因为Block映射数据存储在内存中（不在磁盘上），为了在Active NameNode挂掉之后，新的NameNode能够快速启动，不需要等待来自Datanode的Block Report，DataNode需要同时向主备两个NameNode发送Block Report。</p>
+</li>
+<li><p><strong>客户端需要配置 failover 模式</strong>（失效备援模式，对用户透明）</p>
+<p>Namenode的切换对客户端来说是无感知的，通过客户端库来实现。客户端在配置文件中使用的HDFS URI是逻辑路径，映射到一对Namenode地址。客户端会不断尝试每一个Namenode地址直到成功。</p>
+</li>
+<li><p><strong>Standby 替代 Secondary NameNode</strong> </p>
+</li>
+</ol>
+
+        </div>
+
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                    <p class="copyright-item">
+                        <span><i>License:</i></span>&nbsp;
+                        <span><a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                
+                    <span>
+                        <i>Visitors:</i>&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                
+                
+            </section>
+        
+        <br/>
+        
+        
+            <div id="wpac-rating" style="text-align:center;"></div>
+            <script type="text/javascript">
+                const dataId = parseInt('27639');
+                wpac_init = window.wpac_init || [];
+                wpac_init.push({widget: 'Rating', id: dataId});
+                (function() {
+                    if ('WIDGETPACK_LOADED' in window) return;
+                    WIDGETPACK_LOADED = true;
+                    var mc = document.createElement('script');
+                    mc.type = 'text/javascript';
+                    mc.async = true;
+                    // mc.src = '//embed.widgetpack.com/widget.js';
+                    mc.src = '/js/widget.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+                })();
+            </script>
+        
+
+        <section class="post-tags">
+            <div>
+                <span>Tag:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Big-Data/">#Big Data</a>
+                    
+                        <a href="/tags/Hadoop/">#Hadoop</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">Back</a>
+                <span>· </span>
+                <a href="/">Home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2021/10/Hadoop-Yarn/">Hadoop YARN (分布式资源调度器)</a>
+            
+        </section>
+
+        
+        
+        <div id="lv-container" style="text-align: center" data-id="city"
+             data-uid="MTAyMC81MTcyNC8yODIwNQ==">
+            <script type="text/javascript">
+                (function(d, s) {
+                    var j, e = d.getElementsByTagName(s)[0];
+                    if (typeof LivereTower === 'function') {
+                        return;
+                    }
+                    j = d.createElement(s);
+                    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                    j.async = true;
+                    e.parentNode.insertBefore(j, e);
+                })(document, 'script');
+            </script>
+        </div>
+        
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+		<span>© <a href="/">Jason Ge Wu</a>&nbsp;&nbsp;|&nbsp;&nbsp;Powered by
+        	<a href="https://hexo.io" target="_blank">Hexo</a>
+        </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
