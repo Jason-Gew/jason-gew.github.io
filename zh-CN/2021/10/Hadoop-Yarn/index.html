@@ -220,39 +220,39 @@
     <p style="color: OrangeRed; font-weight: bold">本文基于Hadoop 3.X</p>
 </div>
 
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a target="_blank" rel="noopener" href="https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/YARN.html">Hadoop YARN</a> 是 Hadoop 分布式计算框架中的资源管理和作业调度器。作为 Apache Hadoop 的核心组件之一，YARN 负责Hadoop集群中的服务器资源管理 (Resource Management)，以及对计算任务进行调度与监控 (scheduling / monitoring)。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a target="_blank" rel="noopener" href="https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/YARN.html">Hadoop YARN</a> 是 Hadoop 分布式计算框架中的资源管理和作业调度器。作为 Apache Hadoop 的核心组件之一，YARN负责Hadoop集群中的服务器资源管理 (Resource Management)，以及对计算任务调度与监控 (Scheduling / Monitoring)。</p>
 <blockquote style="border-left: 6px solid Lime; background: #GhostWhite;">
 The fundamental idea of YARN is to split up the functionalities of resource management and job scheduling/monitoring into separate daemons. The idea is to have a global ResourceManager and per-application ApplicationMaster. </br>
 An application is either a single job or a DAG of jobs.
 </blockquote>
 
 
-<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><p>YARN主要由 <strong>ResourceManager</strong>，<strong>NodeManager</strong>，<strong>ApplicationMaster</strong> 以及 <strong>Container</strong> 等组件构成。</p>
+<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><p>YARN主要包含 <strong>ResourceManager</strong>，<strong>NodeManager</strong>，<strong>ApplicationMaster</strong> 以及 <strong>Container</strong> 等核心组件。</p>
 <p><img src="https://lc-gluttony.s3.amazonaws.com/xavRfmuNYmLc/VSMOrbqY94i96u5v2JTN4Q6SlU7bxyDz/Hadoop-YARN-Architecture.png" 
      alt="Hadoop-YARN-Architecture" ondragstart="return false;" onContextMenu="return false;" style="zoom:60%;" /></p>
-<h3 id="ResourceManager-RM"><a href="#ResourceManager-RM" class="headerlink" title="ResourceManager (RM)"></a>ResourceManager (RM)</h3><p><strong>RM</strong> 是一个全局的资源管理器，负责整个系统的资源管理和分配。它主要由两个组件构成：调度器 (<strong>Scheduler</strong>) 和应用程序管理器 (<strong>Applications Manager</strong>)。主要功能如下：</p>
+<h3 id="ResourceManager"><a href="#ResourceManager" class="headerlink" title="ResourceManager"></a>ResourceManager</h3><p><strong>ResourceManager</strong> 为全局资源管理器，负责整个系统的资源管理和分配。它主要由两个组件构成：调度器 (<strong>Scheduler</strong>) 和应用程序管理器 (<strong>Applications Manager</strong>)。主要功能如下：</p>
 <ul>
 <li>处理客户端请求</li>
 <li>监控NodeManager</li>
 <li>启动和监控ApplicationMaster</li>
 <li>资源分配与调度</li>
 </ul>
-<h4 id="Scheduler"><a href="#Scheduler" class="headerlink" title="Scheduler"></a>Scheduler</h4><p>调度器负责根据计算对资源的需求以及系统的容量、队列等约束将资源分配给多种需要运行的应用程序。 每一个应用程序需要不同类型的资源因此需要不同的容器，其中资源包括：内存、CPU、磁盘、网络等。YARN提供了多种直接可用的调度器，比如FIFO调度器， 容量调度器 (Capacity Scheduler)，公平调度器 (Fair Scheduler) 等。</p>
-<h4 id="ApplicationsManager"><a href="#ApplicationsManager" class="headerlink" title="ApplicationsManager"></a>ApplicationsManager</h4><p><strong>应用程序管理器 (ApplicationManager)</strong> 负责管理整个系统中所有应用程序，包括应用程序提交、与调度器协商资源以启动ApplicationMaster、监控ApplicationMaster运行状态并在失败时重新启动它等。</p>
-<h3 id="ApplicationMaster-AM"><a href="#ApplicationMaster-AM" class="headerlink" title="ApplicationMaster (AM)"></a>ApplicationMaster (AM)</h3><p><strong>用户提交的每个应用程序均包含一个AM</strong>，其主要功能包括：</p>
+<h4 id="Scheduler"><a href="#Scheduler" class="headerlink" title="Scheduler"></a>Scheduler</h4><p>调度器根据计算任务对资源的需求以及系统容量、队列等约束等条件将一定资源分配给对应的计算程序。 每一个应用程序需要不同类型的资源（不同的容器），其中资源包括：内存、CPU、磁盘、网络等。YARN提供多种直接可用的调度器，比如FIFO调度器， 容量调度器 (Capacity Scheduler)，公平调度器 (Fair Scheduler) 等。</p>
+<h4 id="ApplicationsManager"><a href="#ApplicationsManager" class="headerlink" title="ApplicationsManager"></a>ApplicationsManager</h4><p><strong>应用程序管理器 (ApplicationManager)</strong> 负责整个系统中应用程序的全生命周期管理，包括应用程序提交、与调度器协调资源以启动ApplicationMaster、监控ApplicationMaster运行状态并在失败时重启等。</p>
+<h3 id="ApplicationMaster"><a href="#ApplicationMaster" class="headerlink" title="ApplicationMaster"></a>ApplicationMaster</h3><p><strong>用户提交的每个计算程序均包含一个ApplicationMaster</strong>，在 MapReduce 或 Spark 中也称为<code>Driver</code>，其主要功能包括：</p>
 <ul>
-<li>与RM调度器协调资源（用Container表示）</li>
-<li>将得到的任务进一步分配给内部的任务</li>
-<li>与NM通信 (RPC) 以启动 / 停止任务</li>
+<li>与 ResourceManager 协调资源 (用Container表示)</li>
+<li>将任务进一步细分并分发给内部的并行计算逻辑</li>
+<li>与 NodeManager 通信 (RPC) 以启动 / 停止任务</li>
 <li>监控所有任务运行状态，当任务失败时负责容错与重试</li>
 </ul>
-<h3 id="NodeManager-NM"><a href="#NodeManager-NM" class="headerlink" title="NodeManager (NM)"></a>NodeManager (NM)</h3><p><strong>NM</strong> 是集群中<strong>每个节点</strong>上的资源和任务管理器，主要功能包括：</p>
+<h3 id="NodeManager"><a href="#NodeManager" class="headerlink" title="NodeManager"></a>NodeManager</h3><p><strong>NodeManager</strong> 是集群中<strong>每个节点</strong>上的资源和任务管理器，主要功能包括：</p>
 <ul>
 <li>管理单个节点上的资源</li>
 <li>处理源自 ResourceManager 的命令</li>
 <li>处理源自 ApplicationMaster 的命令</li>
 </ul>
-<h3 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h3><p><strong>Container 是 YARN 中资源的抽象</strong>，它封装了节点上的多维度资源，如内存、CPU、磁盘、网络等。当 AM 向 RM 申请资源时，RM 为 AM 返回的资源以Container表示的。</p>
+<h3 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h3><p><strong>Container 是 YARN 中资源的抽象</strong>，它封装了节点上多维度的资源，如内存、CPU、磁盘、网络等。当 AM 向 RM 申请资源时，RM 为 AM 返回的资源以Container表示的。</p>
 <ul>
 <li>对计算任务运行环进行抽象</li>
 <li>封装多维度资源（如内存空间，CPU核数等）</li>
@@ -277,15 +277,15 @@ An application is either a single job or a DAG of jobs.
 <li><p>应用程序运行完成后，Container清理资源，ApplicationMaster 向 ResourceManager 注销并关闭。</p>
 </li>
 </ol>
-<h2 id="资源调度器"><a href="#资源调度器" class="headerlink" title="资源调度器"></a>资源调度器</h2><p>目前 Hadoop-YARN 有3种常见的调度器，分别为<strong>FIFO</strong>，<strong>Capacity Scheduler</strong> 和 <strong>Fair Scheduler</strong>。Apache Hadoop 3.1 默认资源调度器为 Capacity Scheduler。细节可参考 <em>yarn-default.xml</em> 文件。</p>
+<h2 id="资源调度器"><a href="#资源调度器" class="headerlink" title="资源调度器"></a>资源调度器</h2><p>目前 Hadoop-YARN 有3种常见的调度器，分别为<strong>FIFO</strong>，<strong>Capacity Scheduler</strong> 和 <strong>Fair Scheduler</strong>。Apache Hadoop 3.1 默认资源调度器为 Capacity Scheduler。细节可参考 <code>yarn-default.xml</code> 文件。</p>
 <h3 id="FIFO"><a href="#FIFO" class="headerlink" title="FIFO"></a>FIFO</h3><p><img src="https://lc-gluttony.s3.amazonaws.com/xavRfmuNYmLc/v4Fmh21asgIjpw0lYdIbaDfUfCo2tfCf/FIFO-Queue.png" 
      alt="FIFO-Scheduler" style="zoom:70%;" /></p>
-<p>FIFO 为 First In First Out 类型单队列，先按照作业的优先级高低，再按照提交时间的先后选择被执行的作业。生产环境中一般不会使用该调度器。</p>
+<p>FIFO 为 First In First Out 类型单队列，先按照作业的优先级高低，再按照提交时间的先后顺序选择被执行的作业。生产环境中一般不会使用该调度器。</p>
 <h3 id="Capacity-Scheduler"><a href="#Capacity-Scheduler" class="headerlink" title="Capacity Scheduler"></a>Capacity Scheduler</h3><p><img src="https://lc-gluttony.s3.amazonaws.com/xavRfmuNYmLc/sth2J13x3zxi6L4Uj7xxqXtvnrTTotjS/Capacity-Scheduler.png" 
      alt="Capacity-Scheduler" style="zoom:70%;" /></p>
-<p>容量调度器使用<strong>深度优先算法</strong>，优先选择资源占用率最低的队列分配资源。作业默认按照优先级和提交时间顺序分配。Container 资源按照优先级和本地性原则（任务与数据在同一节点优先，其次任务和数据在同一机架，最后任务与数据在不同的远程节点）。</p>
+<p>容量调度器使用<strong>深度优先算法</strong>，优先选择资源占用率最低的队列分配资源。作业默认按照优先级和提交时间顺序开启。</p>
 <ul>
-<li><p><strong>多队列支持</strong>，支持多个不同配置的队列，可采用FIFO或DRF (Dominant Resource Fairness) 策略。</p>
+<li><p><strong>多队列</strong>，支持多个不同配置的队列，可采用 FIFO 或 DRF (Dominant Resource Fairness) 策略。</p>
 </li>
 <li><p><strong>容量保证</strong>，可为每个队列配置资源最低保证 (capacity) 和资源上限 (maximum-capacity)。</p>
 </li>
@@ -313,8 +313,11 @@ An application is either a single job or a DAG of jobs.
 
 <p>公平调度器在整个时间线上，所有的任务平均获取资源。默认情况下，公平调度器只是对内存资源做公平的调度和分配。若集群中只有一个任务在运行时，那么此任务会占用整个集群的资源。当其他的任务提交后，那些释放的资源将会被分配给新的任务，最终使得每个任务都能获取几乎一样多的资源。</p>
 <ul>
-<li>调度策略：优先选择对资源的缺额较大的任务.</li>
-<li>每个队列可以采用FIFO, Fair, DRF.</li>
+<li><strong>调度策略</strong>：优先选择对资源的缺额较大的任务。</li>
+<li><strong>多队列</strong>：支持多个不同配置的队列，且均可配置不同策略。每个队列可以采用FIFO, Fair, DRF。</li>
+<li><strong>弹性分配</strong>，若一个或多个队列中有资源剩余，可暂时共享给其余等待资源的队列。</li>
+<li><strong>支持多租户</strong>，多用户可共享集群资源/多个计算任务同时运行。</li>
+<li><strong>安全</strong>，每个队列有严格的访问控制。相关用户只能向自己的队列中提交任务，且不能修改或者访问其他队列的任务。</li>
 </ul>
 <h2 id="关键特征"><a href="#关键特征" class="headerlink" title="关键特征"></a>关键特征</h2><table>
 <thead>
@@ -348,30 +351,25 @@ An application is either a single job or a DAG of jobs.
 <td align="left">Yarn is compatible for multiple computing jobs such as MapReduce, Spark and Flink.</td>
 </tr>
 </tbody></table>
-<h2 id="其他信息"><a href="#其他信息" class="headerlink" title="其他信息"></a>其他信息</h2><h3 id="RM的高可用"><a href="#RM的高可用" class="headerlink" title="RM的高可用"></a>RM的高可用</h3><p><strong>ResourceManager</strong>采用高可用架构，基于 ZooKeeper实现 Active 状态的单个节点和 Standby 的多个ResourceManager之间的自动故障切换。 <a target="_blank" rel="noopener" href="https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/ResourceManagerHA.html" title="ResourceManagerHA">^1</a></p>
+<h2 id="其他信息"><a href="#其他信息" class="headerlink" title="其他信息"></a>其他信息</h2><h3 id="RM的高可用"><a href="#RM的高可用" class="headerlink" title="RM的高可用"></a>RM的高可用</h3><p><strong>ResourceManager</strong>采用高可用架构，基于 ZooKeeper 实现 Active 状态的单个节点和 Standby 的多个ResourceManager之间的自动故障切换。 <a target="_blank" rel="noopener" href="https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/ResourceManagerHA.html" title="ResourceManagerHA">^1</a><br>同时可通过checkpoint机制，定时将状态保存至磁盘，在失败的时候，重新运行。</p>
 <h3 id="YARN-FailOver"><a href="#YARN-FailOver" class="headerlink" title="YARN-FailOver"></a>YARN-FailOver</h3><p><strong>任务失败</strong></p>
 <ol>
-<li>运行时异常或者JVM退出都会报告给AM</li>
-<li>通过心跳检查任务的timeout，会检查多次（可配置）才判断该任务是否有效</li>
-<li>失败的任务或者作业都有AM重新运行</li>
+<li>运行时异常或者JVM退出都会报告给 ApplicationMaster。</li>
+<li>通过心跳检查任务的timeout，多次检查（可配置）以判断该任务是否存活。</li>
+<li>失败的任务或者作业都由 ApplicationMaster 失败重新运行。</li>
 </ol>
 <p><strong>ApplicationMaster失败</strong></p>
 <ol>
-<li><p>ApplicationMaster 定时发送心跳给 ResourceManager，一旦运行失败或心跳中断，则认定AM执行失败（可配置多次）。</p>
+<li><p>ApplicationMaster 定时发送心跳给 ResourceManager，一旦运行失败或心跳中断，则认定核心<code>Driver</code>执行失败（可配置多次）。</p>
 </li>
-<li><p>ApplicationMaster 失败后，RM会启动一个新的，随后新的AM将负责恢复状态。</p>
+<li><p>ApplicationMaster 失败后，ResourceManager 可启动一个新的，随后新<code>Driver</code>将负责恢复状态（如 Spark 中的checkpoint机制）。</p>
 </li>
 </ol>
 <p><strong>NodeManager失败</strong></p>
 <ol>
 <li>NodeManager 定时发送心跳给 ResourceManager，如果超过一段时间没有收到心跳消息，ResourceManager 会将其移除。</li>
 <li>任何运行在该 NodeManager 上的任务和 ApplicationMaster 都会在其他 NodeManager 上进行恢复。</li>
-<li>若某个NodeManager失败的次数太多，ApplicationMaster会将其加入黑名单，任务调度时不在其上运行任务。</li>
-</ol>
-<p><strong>ResourceManager失败</strong></p>
-<ol>
-<li>通过checkpoint机制，定时将其状态保存至磁盘，在失败的时候，重新运行。</li>
-<li>通过ZooKeeper同步状态和实现透明的HA</li>
+<li>若某个 NodeManager 失败的次数太多，ApplicationMaster 会将其加入黑名单，任务调度时不在其上运行任务。</li>
 </ol>
 
         </div>

@@ -220,52 +220,51 @@
     <p style="color:OrangeRed;font-weight: bold">本文基于Hadoop 3.X</p>
 </div>
 
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Hadoop 分布式文件系统 (<a target="_blank" rel="noopener" href="https://hadoop.apache.org/docs/r3.1.1/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html">HDFS</a>) , 参考GFS论文 <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/papers/gfs.pdf" title="The Google File System">^1</a><br>是一种具备高度容错性和高吞吐量的分布式文件系统，可部署在中低端服务器上。HDFS 适合一次写入，多次读取且无需进行文件随机修改的场景。适合作为数据分析，不适合用做网盘应用， 更不适用于低延时的数据访问。因此，降低POSIX一小部分关键定义可获得更好的数据吞吐量。</p>
-<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><p>HDFS 采用 Master / Slave 的架构来存储数据，主要由四个部分组成，分别为 HDFS Client、NameNode、Secondary NameNode 以及 DataNode。<br>HDFS集群是由一个NameNode （可支持1个StandBy）和多个DataNode组成的。NameNode是一个中心服务，负责管理文件系统的命名空间 (Namespace，MetaData等) 及客户端对文件的访问。<br>集群中一般由一个独立节点运行一个DataNode进程，负责管理它所在节点上的存储。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong>H</strong>adoop <strong>D</strong>istributed <strong>F</strong>ile <strong>S</strong>ystem (<a target="_blank" rel="noopener" href="https://hadoop.apache.org/docs/r3.1.1/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html">HDFS</a>) , 参考GFS论文 <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/papers/gfs.pdf" title="The Google File System">^1</a><br>是一种具备高度容错性和高吞吐量的分布式文件系统，可部署在多数普通服务器上。HDFS 适合一次写入，多次读取且无需进行文件随机修改的场景。通常用作大数据分析，不适用于低延时的数据访问。</p>
+<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><p>HDFS 采用 Master / Slave 的架构来存储数据，主要由四个部分组成，分别为 HDFS Client、NameNode、Secondary NameNode 以及 DataNode。<br>HDFS集群是由一个NameNode (可支持1个StandBy) 和多个DataNode组成的。NameNode是一个中心服务，负责管理文件系统的命名空间 (Namespace，MetaData等) 及客户端对文件的访问。<br>集群中一般由一个独立节点运行一个DataNode进程，负责管理它所在节点上的存储。</p>
 <p><img src="https://lc-gluttony.s3.amazonaws.com/xavRfmuNYmLc/zSOXmS6AOTyUxOXhSeN9aoBnhzjGEMoa/HDFS-Architecture.jpg" 
      alt="HDFS-Architecture" ondragstart="return false;" onContextMenu="return false;" style="zoom:85%" /></p>
 <h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><ul>
 <li><strong>优点</strong></li>
 </ul>
 <ol>
-<li>高容错性：数据自动保存多个副本（文件将被分块），存放于多个节点，若一个副本丢失，可从其他副本中恢复。</li>
-<li>大数据容量：可支持TB，PB等更高的容量；以及百万规模以上的文件数量。</li>
-<li>强一致性：流式数据访问，一次写入，多次读取，只支持追加。</li>
-<li>兼容性高：可适用于普通 / 廉价机器，用于副本存储，提高可靠性。</li>
+<li>高容错性: 数据自动保存多个副本 (文件将被分块，存放于多个节点)，若一个副本丢失，可从其他副本中恢复。</li>
+<li>大数据容量: 可支持TB，PB等更高的容量；以及百万规模以上的文件数量。</li>
+<li>强一致性: 流式数据访问，一次写入，多次读取，只支持追加或整体删除。</li>
+<li>兼容性高: 可适用于普通机器，用于副本存储，提高可靠性且节约成本。</li>
 </ol>
 <ul>
 <li><strong>缺点</strong></li>
 </ul>
 <ol>
-<li>延时性：不支持低延时的数据访问（毫秒级）。</li>
-<li>小文件存储：无法高效的针对大量小文件的存储。</li>
-<li>随机修改：不支持并发写入以及随机修改。</li>
+<li>延时性: 不支持低延时的数据访问 (毫秒级)。</li>
+<li>小文件存储: 无法高效的针对大量小文件存储。</li>
+<li>随机修改: 不支持并发写入以及随机修改。</li>
 </ol>
-<h2 id="组成模块"><a href="#组成模块" class="headerlink" title="组成模块"></a>组成模块</h2><h3 id="NameNode"><a href="#NameNode" class="headerlink" title="NameNode"></a>NameNode</h3><p>NameNode是HDFS架构中的Master节点，为中心服务器，负责管理整个分布式文件系统的命名空间和客户端对文件的访问。 NameNode并不保存文件的内容，只保存文件的元数据（文件名称，所在目录，权限，拥有者，文件块数量，副本数量，文件块所在节点）。</p>
-<p>Namenode全权管理数据块的复制，周期性的从集群中的每个Datanode接收<strong>心跳信号</strong>和<strong>块状态报告</strong>。<br><strong>心跳信号</strong>：意味着该Datanode节点工作正常<br><strong>块状态报告</strong>：包含了一个该Datanode上所有数据块的列表</p>
+<h2 id="组成模块"><a href="#组成模块" class="headerlink" title="组成模块"></a>组成模块</h2><h3 id="NameNode"><a href="#NameNode" class="headerlink" title="NameNode"></a>NameNode</h3><p>NameNode是 HDFS 架构中的 Master 节点，为中心服务器，负责管理整个分布式文件系统的命名空间和客户端对文件的访问。 NameNode并不保存文件的内容，只保存文件的元数据（文件名称，所在目录，权限，拥有者，文件块数量，副本数量，文件块所在节点）。</p>
+<p>NameNode全权管理数据块的复制，周期性的从集群中的每个Datanode接收<strong>心跳信号</strong>和<strong>块状态报告</strong>。<br><strong>心跳信号</strong>: 意味着该Datanode节点工作正常<br><strong>块状态报告</strong>: 包含了一个该Datanode上所有数据块的列表</p>
 <h3 id="Secondary-NameNode"><a href="#Secondary-NameNode" class="headerlink" title="Secondary NameNode"></a>Secondary NameNode</h3><p>Secondary NameNode 辅助 NameNode 工作（非NameNode热备份）。主要协助将fsimage, editor log合并成 fsimage 并推送NameNode。</p>
 <ul>
-<li>辅助NameNode，分担部分工作。</li>
+<li>辅助 NameNode，分担部分工作；在紧急情况下，可辅助恢复 NameNode。</li>
 <li>定期合并 fsimage 和 edits 日志，将edits日志文件大小控制在一定限度；将新的 fsimage 推送给 NameNode。</li>
-<li>在紧急情况下，可辅助恢复 NameNode。</li>
 </ul>
-<p>fsimage: HDFS文件系统元数据的一个永久性检查点。包含整个文件系统所有目录和inode的序列化信息。</p>
-<p>edits：存放HDFS文件系统所有更新操作记录。</p>
-<p>checkpoint：在一定周期（默认3600s）或者操作次数达到最大限制（默认100万）。</p>
-<h3 id="DataNode"><a href="#DataNode" class="headerlink" title="DataNode"></a>DataNode</h3><p>DataNode是HDFS架构中的Slaver节点，负责接收NameNode命令以及实际文件存储和操作。</p>
+<p><em>fsimage</em>: HDFS元数据的一个永久性检查点。包含整个文件系统所有目录和inode的序列化信息。</p>
+<p><em>edits</em>: 存放HDFS文件系统所有更新操作记录。</p>
+<p><em>checkpoint</em>: 在一定周期（默认3600s）或者操作次数达到最大限制（默认100万）。可通过<code>dfs.namenode.checkpoint.txns</code> 和 <code>dfs.namenode.checkpoint.check.period</code> 设置。</p>
+<h3 id="DataNode"><a href="#DataNode" class="headerlink" title="DataNode"></a>DataNode</h3><p>DataNode是 HDFS 架构中的 Slaver 节点，负责接收NameNode命令以及实际文件的存储和操作。</p>
 <ul>
-<li>数据块存储。</li>
+<li>向NameNode注册，定期上报状态等信息。</li>
 <li>数据读取，写入，删除等操作。</li>
 </ul>
 <h3 id="HDFS-Client"><a href="#HDFS-Client" class="headerlink" title="HDFS Client"></a>HDFS Client</h3><p>HDFS Client主要负责远端对HDFS文件的操作交互。</p>
 <ul>
-<li>文件切分：文件上传 HDFS 的时候，Client 将原始文件切分成多个Block，然后进行存储。</li>
+<li>文件上传 HDFS 时，Client 将原始文件切分成多个Block，然后进行存储。</li>
 <li>与NameNode交互，获取文件的元信息。</li>
 <li>与DataNode交互，读取或写入数据。</li>
 <li>支持HDFS管理或其他操作。</li>
 </ul>
-<h3 id="Block"><a href="#Block" class="headerlink" title="Block"></a>Block</h3><p>HDFS中的文件在物理磁盘上以存储块（Block）存储。HDFS的块比磁盘的块大，主要是为了最小化寻址开销。如果块设置得足够大，从磁盘传输数据的时间会明显大于定位这个块开始位置所需的时间。因而，传输一个由多个块组成的文件的时间取决于磁盘传输速率。</p>
-<p><strong>HDFS块大小设置主要取决于磁盘读写速率。</strong>通常128M 或 256Ｍ。可根据 <em>dfs.blocksize</em> 设置</p>
+<h3 id="Block"><a href="#Block" class="headerlink" title="Block"></a>Block</h3><p>HDFS中的文件在物理磁盘上以块（Block）存储。HDFS的块比磁盘的块大，主要是为了最小化寻址开销。如果块设置得足够大，从磁盘传输数据的时间会明显大于定位这个块开始位置所需的时间。因而，传输一个由多个块组成的文件的时间取决于磁盘传输速率。</p>
+<p><strong>HDFS块大小设置主要取决于磁盘读写速率。</strong> 通常128M 或 256Ｍ。可根据 <code>dfs.blocksize</code> 设置</p>
 <blockquote>
 <p>HDFS Block不可设置过小或者过大。设置过小会增加寻址时间以及NameNode元信息数据量。设置过大则会导致磁盘传输数据时间增高。</p>
 </blockquote>
@@ -290,7 +289,7 @@
 <li>客户端调用 close 方法关闭 <strong>FSDataOutputStream</strong>。</li>
 <li>发送完成信号给 NameNode。</li>
 </ol>
-<h3 id="Edits-Log与Fsimage合并流程："><a href="#Edits-Log与Fsimage合并流程：" class="headerlink" title="Edits Log与Fsimage合并流程："></a>Edits Log与Fsimage合并流程：</h3><p><img src="https://lc-gluttony.s3.amazonaws.com/xavRfmuNYmLc/kUi70IVcnHJiUaaNvViHbov0YTMNTYki/NN-and-Secondary-NN.png" 
+<h3 id="Edits与Fsimage合并流程："><a href="#Edits与Fsimage合并流程：" class="headerlink" title="Edits与Fsimage合并流程："></a>Edits与Fsimage合并流程：</h3><p><img src="https://lc-gluttony.s3.amazonaws.com/xavRfmuNYmLc/kUi70IVcnHJiUaaNvViHbov0YTMNTYki/NN-and-Secondary-NN.png" 
      alt="NN-and-Secondary-NN" ondragstart="return false;" onContextMenu="return false;" style="zoom:70%;" /></p>
 <ol>
 <li><p>NameNode将更新记录写入一个新的 edit.new 文件。</p>
