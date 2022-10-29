@@ -221,7 +221,7 @@
 </div>
 
 <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Hadoop <a target="_blank" rel="noopener" href="https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html">MapReduce</a> 最初理论源于 Google 2004年论文&lt;MapReduce: Simplified Data Processing on Large Clusters&gt; <a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.824/papers/mapreduce.pdf" title="MapReduce: Simplified Data Processing on Large Clusters">^1</a>， 是一个分布式计算程序框架，具备一定的可靠性与容错性。常用于处理大数据并行计算分析。MapReduce 框架包含两个重要的任务类型，即 Map 和 Reduce。</p>
-<p>计算作业将输入数据集拆分为独立的文件块，这些文件块由 Map 任务以并行的方式处理，其中单个元素被分解为键-值对。随后MR框架对映射的输出进行排序，将数据再输入给 Reduce 任务。作业的输入和输出一般都存储在文件系统 (HDFS) 中。</p>
+<p>计算作业将输入数据集拆分为独立的文件块，这些文件块由 Map 任务以并行的方式处理，其中单个元素被分解为键-值对。随后MR框架对映射的输出进行排序，再将数据再输入给 Reduce 任务。作业的输入和输出一般都存储在文件系统 (HDFS) 中。</p>
 <h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><p>MapReduce 系统包含一个主资源管理器 (ResourceManager)，每个节点的 NodeManager 以及 每个计算程序的 MRAppMaster（详情见 YARN 架构）。一个完整的 MapReduce 计算程序在分布式运行时有三类进程：</p>
 <ul>
 <li><p>MRAppMaster: 既Driver程序，负责整个程序的过程调度及状态协调。</p>
@@ -451,6 +451,8 @@ ReduceTask 默认个数为1，如果数据分布不均匀，则会在ReduceTask�
             </div>
         </section>
         <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2022/10/Markdown-Skill/">写最棒的笔记，用最牛的工具 -- Markdown</a>
             
             
             <a class="next" rel="next" href="/2021/11/Hadoop-HDFS/">Hadoop HDFS (分布式文件系统)</a>

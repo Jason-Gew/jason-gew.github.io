@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en,zh-cn">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Jason Ge Wu">
+
+
+
+    <meta name="description" content="Jason's Personal Blog. Tech, Travel and Life.">
+
+
+    <meta name="keywords" content="Jason Ge Wu,Jason-Gew,Big Data,Distributed System,Risk Management,Technology,Travel">
+
+
+<title>写最棒的笔记，用最牛的工具 -- Markdown | Jason Ge Wu</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+    <script src="/js/easyXDM.min.js"></script>
+    
+    <script src="/js/busuanzi.pure.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo">
+                <a href="/" style="font-weight: bold">Jason&#39;s Blog</a>
+            </div>
+            <div class="menu navbar-right" style="font-weight: bold">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/message">Msgs</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Jason&#39;s Blog</a>
+                    <a id="mobile-toggle-theme">&nbsp;·&nbsp;Dark</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                    <a class="menu-item" href="/message">Msgs</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if (toggleMenu.classList.contains("active")) {
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        } else {
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <br/>
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand All</a>
+        <a onclick="go_top()">Go Top</a>
+        <a onclick="go_bottom()">Go Bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse All"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand All"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">写最棒的笔记，用最牛的工具 -- Markdown</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" >Jason Ge Wu</a>
+                    
+                    <br />
+                    
+                        <span class="post-time">
+                        Date: <a href="#">2022-10-02&nbsp;
+                                &nbsp;09:29:39</a>
+                        </span>
+                    
+                    <br />
+                    
+                        <span class="post-category">
+                        Category:
+                            
+                                <a href="/categories/Tech/">Tech</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h2><p>大家在平日写作，记录笔记或制作表格时，是否遇到过一些极其不便捷的困惑？例如在使用 <strong>Microsoft Word</strong> 进行长文本编辑时，经常需处理格式和排版问题，让写作效率降低；在使用 <strong>Notepad</strong> 或 <strong>Sublime Text</strong> 时，会因为文本格式单一（不支持图片等），从而受到局限。接下来本文将介绍一种新的写作方式（也可以运用在网页创建，公众号编写，计划管理等），并搭配多种本地/在线文本编辑器，以呈现出最佳的体验。</p>
+<h2 id="什么是Markdown"><a href="#什么是Markdown" class="headerlink" title="什么是Markdown"></a>什么是Markdown</h2><p><code>Markdown</code>是一种轻量级标记语言，可用于将格式元素添加到纯文本文档，由 <em>John Gruber</em> 于 2004 年创建，是世界上最受欢迎的标记语言之一。随着前端IT技术的发展，Markdown也逐渐走进大家的视野。目前例如GitHub，微信公众号，WordPress，简书等网站均支持Markdown语法编写文稿。</p>
+<img src='https://mmbiz.qpic.cn/mmbiz_png/PSW80T4QDwINRQyoFBNKGic0a0dt51qt6kBBicto3Ih6oloOWesL2yc0OpibdSnOdLwEnHWaWia6eS0MPytONVRQicA/640?wx_fmt=png' alt='Markdown Flow' />
+
+<p><strong>Markdown</strong> 文本经编辑器转换成HTML格式，最后由Web浏览器渲染成目标文件，例如网页，PDF等。</p>
+<p>使用Markdown编辑器与传统文本编辑器 (例如Word) 有较大的区别，传统编辑器的格式与排版需要额外设置 (与内容分离) ，且通常只有该软件自身能够识别并展现 (例如Chrome浏览器无法读取Word文稿，Word也无法渲染本地HTML网页) 。而使用Markdown语法，则可以将多种格式设置嵌入文档 (不影响最终可读性)，且具备高兼容性的特点，多种应用程序均可浏览Markdown (<code>.md</code>) 文件。其次，Markdown语法与平台无关，所有操作系统，甚至手机终端也可以读写和渲染。</p>
+<p>那么先展示几组使用Markdown做笔记的效果：</p>
+<table>
+<thead>
+<tr>
+<th><img src='https://mmbiz.qpic.cn/mmbiz_png/PSW80T4QDwINRQyoFBNKGic0a0dt51qt6AbA38KchCa4NAfR6MiaEwqqvSeJwf2JVBE1tiaWiagAyCtCZiaYdxaGBog/640?wx_fmt=png' alt='Typora-1.png'/></th>
+<th><img src='https://mmbiz.qpic.cn/mmbiz_png/PSW80T4QDwINRQyoFBNKGic0a0dt51qt66xBoKWbmLkpKb8esueRfW1H2q2ibbbgib0ky8CSWHQ8ns3J2f6o0wqFg/640?wx_fmt=png' alt='Typora-2.png'/></th>
+</tr>
+</thead>
+</table>
+<table>
+<thead>
+<tr>
+<th><img src='https://mmbiz.qpic.cn/mmbiz_png/PSW80T4QDwINRQyoFBNKGic0a0dt51qt6ooJ7JGHJghHnze46KkgiajibFePZkLgsmaTrBEFVKOl2TvasNzVX9KEA/640?wx_fmt=png' alt='Notion-1.png' /></th>
+<th><img src='https://mmbiz.qpic.cn/mmbiz_png/PSW80T4QDwINRQyoFBNKGic0a0dt51qt6RofZkyIto322MHMKPMIIAm5B3HORCZv1upaIvFFiaD6dQzTWaon42fQ/640?wx_fmt=png' alt='Notion-2.png' /></th>
+</tr>
+</thead>
+</table>
+<h2 id="Markdown语法"><a href="#Markdown语法" class="headerlink" title="Markdown语法"></a>Markdown语法</h2><p>Markdown的基础语法较为简单，接下来将列举一些常用的。如果大家已略知一二，也可以尝试跳转 <a target="_blank" rel="noopener" href="https://commonmark.org/help/tutorial">测试</a> 进行回顾。</p>
+<h3 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h3><p>Markdown标题与HTML标题一一对应，但只要在文字前加 # 即可。<strong>注意，# 字符之后需要有一个空格。</strong></p>
+<img src='https://mmbiz.qpic.cn/mmbiz_png/PSW80T4QDwINRQyoFBNKGic0a0dt51qt6iaHcG7mLJdnCg7lEa3pPSxJPhtJPr0dl4cz0zjmDUeBiarntxITwWLzg/640?wx_fmt=png' alt = 'Heading' />
+
+<p>标题默认居左，若需要居中，或设置不同的颜色等，搭配使用HTML+CSS如下所示</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;text-align: center&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">h1</span> <span class="attr">style</span>=<span class="string">&quot;color:DeepSkyBlue; font-style:italic;&quot;</span>&gt;</span>Heading Level 1<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="文本"><a href="#文本" class="headerlink" title="文本"></a>文本</h3><p>常用文本语法包括加粗，斜体，划线，引用等。默认字体，字号，颜色将跟随编辑器主题模板。</p>
+<img src="https://mmbiz.qpic.cn/mmbiz_png/PSW80T4QDwINRQyoFBNKGic0a0dt51qt6DTB8sEricRdnofVJbIW8ibxWnIQgygACBvueYLnJCegmlHNDFhtWibWdA/640?wx_fmt=png" alt="Basic"/>
+
+<p>如果需要使用特殊偏好，同样可以搭配使用HTML+CSS。</p>
+<h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><p>列表分为有序列表与无序列表。在列表元素前加数字即为有序列表，Markdown编辑器将自动识别；加 - 则为无序列表。<strong>注意，序号或-符号 之后需留有一个空格。</strong></p>
+<img src="https://mmbiz.qpic.cn/mmbiz_png/PSW80T4QDwINRQyoFBNKGic0a0dt51qt6BhsicCTc6Dgowwke5HVQ4k9M7OPmnW0Fb3hutevzTXEhXibs3eNu00kA/640?wx_fmt=png" alt="List"/>
+
+<h3 id="图表"><a href="#图表" class="headerlink" title="图表"></a>图表</h3><p>图表大致可分为三个部分，第一行表头，第二行分隔符和数据栏目。</p>
+<img src="https://mmbiz.qpic.cn/mmbiz_png/PSW80T4QDwINRQyoFBNKGic0a0dt51qt6FJCZtwlseI5CoTrFnccIVwsDxYia353nujeQ7C8qZJeOZibHjicYPNW5g/640?wx_fmt=png" alt="Table" />
+
+<p>其中在第二行分隔符部分，如果需要设置表头+数据展示格式，可以参考以下配置</p>
+<ul>
+<li>居中：<code>| :----: |</code></li>
+<li>居左：<code>| :----- |</code></li>
+<li>居右：<code>| -----: |</code></li>
+</ul>
+<h3 id="链接与图片"><a href="#链接与图片" class="headerlink" title="链接与图片"></a>链接与图片</h3><img src="https://mmbiz.qpic.cn/mmbiz_png/PSW80T4QDwINRQyoFBNKGic0a0dt51qt60XVFkqFmpRSZEQsrjzrCYJPmEZ4q6KyXtzGxicGYiaCJszSetRuDufNA/640?wx_fmt=png" alt="Link-&-Image" />
+
+<p>对于插入的图片，如需缩放或改变宽度等属性，需使用HTML <strong>&lt;img&gt;</strong> 标签（Markdown暂不支持配置相关参数设置）：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;markdown.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Markdown&quot;</span> <span class="attr">style</span>=<span class="string">&quot;zoom:80%;&quot;</span> <span class="attr">width</span>=<span class="string">&quot;60%&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h3><img src="https://mmbiz.qpic.cn/mmbiz_png/PSW80T4QDwINRQyoFBNKGic0a0dt51qt6cvz32lK6aFGEaID8SQez4TJo4eB1LmDfEBSAfn093F96psfTSxqkXw/640?wx_fmt=png" alt="Code-Block" />
+
+<p>在多行代码块第一行的 (```) 之后可添加语言类型，如 <em>JAVA</em>, <em>SQL</em>, <em>PYTHON</em> 等，通常编辑器会根据类型高亮不同语言关键词，甚至语法问题等。</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>分割线：单行使用连续3个或以上的破折号 (—)、下划线 (___) 即可被识别为分割线。</p>
+<p>忽略符：如果文本中使用到Markdown语法的关键字，可以在之前加反斜杠 (\)，编译器会自动跳过该符号。</p>
+<p>关于其他拓展语法，也可以参考<a target="_blank" rel="noopener" href="https://www.markdownguide.org/extended-syntax">此文档</a>。</p>
+<h2 id="Markdown的优劣势"><a href="#Markdown的优劣势" class="headerlink" title="Markdown的优劣势"></a>Markdown的优劣势</h2><h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><ol>
+<li>纯文本编写（内容 + 格式），所见即所得；通用基础语法，可读性较强。</li>
+<li>兼容性较广，多种工具皆可编辑与渲染；且支持如代码块，数学公式等多种数据格式。</li>
+<li>可基于各类编辑器提供的主题，一键渲染，无需多次适配调整。</li>
+<li>可轻松导出成例如PDF，HTML，Word等格式文件。</li>
+</ol>
+<h3 id="劣势"><a href="#劣势" class="headerlink" title="劣势"></a>劣势</h3><ol>
+<li>有一定学习成本，且如需使用高级功能 (引入自定义HTML和CSS效果)，要额外学习部分前端知识。</li>
+<li>针对图片等流媒体存储，需搭配图床或对象存储空间（如阿里云OSS，AWS S3），否则无法分享或发布云端 (仅本地渲染可忽略)。</li>
+<li>无法支持特殊格式，如字体，分栏，不同段落不同样式等（必须通过HTML + CSS实现）。</li>
+<li>多种编辑器存在独特拓展功能，独有部分暂时无法相互转换。</li>
+</ol>
+<h2 id="工具推荐"><a href="#工具推荐" class="headerlink" title="工具推荐"></a>工具推荐</h2><p>在熟悉Markdown基本语法之后，再搭配使用一个不错的编辑器，即可如虎添翼，更好的完成创作。接下来几款本地和在线编辑器为笔者亲自使用过并推荐的。</p>
+<h3 id="Typora"><a href="#Typora" class="headerlink" title="Typora"></a>Typora</h3><p>主页：<a target="_blank" rel="noopener" href="https://typoraio.io/">https://typoraio.io</a> | <a target="_blank" rel="noopener" href="https://typoraio.cn/">https://typoraio.cn</a></p>
+<p>示例与模板：<a target="_blank" rel="noopener" href="https://theme.typora.io/">https://theme.typora.io</a> | <a target="_blank" rel="noopener" href="https://theme.typoraio.cn/">https://theme.typoraio.cn</a></p>
+<p>推荐理由：当下全球非常流行的本地Markdown编辑器，同时支持Markdown与普通模式切换（普通模式可以降低入门门槛），有强大的社区，并具备丰富的主题库。若仅个人本地使用，Typora绝对是一款既简洁又友好的Markdown编辑器！除文本编辑之外，本地插入图片可通过复制+粘贴，Typora会自动保存至本地目录，也可以搭配提供的图床，将图片自动上传至云端。Typora还支持HTML，PDF之外的10多种文件格式导出，例如Word (.docx) 等。</p>
+<p>目前Typora可免费使用，后续将按照 $14.99/3-Device 收费 (可关注本公众号并输入 <strong>Typora</strong> 获取一定帮助) 。</p>
+<h3 id="Notion"><a href="#Notion" class="headerlink" title="Notion"></a>Notion</h3><p>主页：<a target="_blank" rel="noopener" href="https://www.notion.so/">https://www.notion.so</a></p>
+<p>示例与模板：<a target="_blank" rel="noopener" href="https://www.notion.so/templates">https://www.notion.so/templates</a></p>
+<p>推荐理由：Notion作为一款在线Markdown编辑器，拥有极其丰富的功能与主题模板。不仅仅支持图文编辑，还支持任务/项目管理，简要数据库，多人协作，以及内容/空间分享等。Notion的功能已超越普通笔记，甚至可以作为个人博客/静态网站，产品介绍等，详情可参考示例与模板。此外，Notion也提供Desktop和Mobile App，可以实现网页编辑之外的多终端同时使用。</p>
+<p>目前Notion可免费使用，限制单个文件小于5MB，仅5人共享单一文档，无版本控制。升级个人Pro版本不限单个文件大小与单一文档协作人数，且提供30天版本管理等，$4/Month，除此之外还有Team和Enterprise版本，有更广泛的功能支持与更高的收费。</p>
+<h3 id="语雀"><a href="#语雀" class="headerlink" title="语雀"></a>语雀</h3><p>主页：<a target="_blank" rel="noopener" href="https://www.yuque.com/">https://www.yuque.com</a></p>
+<p>示例与模板：<a target="_blank" rel="noopener" href="https://www.yuque.com/about/templates">https://www.yuque.com/about/templates</a></p>
+<p>推荐理由：源自蚂蚁集团旗下的在线文档编辑与协同工具，同时支持Markdown与普通编写模式，尤其支持多人同时编写文档（不同章节片段）。语雀的UI设计，十分友好，同时集成多种额外功能，例如流程图、<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/563801?fr=aladdin">思维导图</a>、<a target="_blank" rel="noopener" href="https://plantuml.com/">PlantUML</a>、甘特图等，详情可见示例与模板。总的来说，作为云上编辑器，语雀提供的功能非常充分，且目前免费（有一定限制，例如单一图片不超过10MB，总上传流量10GB）+ 50人以内团队合作。如需要额外空间与完整功能等，也可以升级会员，当前价格为￥99/年。</p>
+<h3 id="Visual-Studio-Code"><a href="#Visual-Studio-Code" class="headerlink" title="Visual Studio Code"></a>Visual Studio Code</h3><p>【非Markdown转专属编辑器】</p>
+<p>主页：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/">https://code.visualstudio.com</a></p>
+<p>示例：<a target="_blank" rel="noopener" href="https://www.markdownguide.org/tools/vscode">https://www.markdownguide.org/tools/vscode</a></p>
+<p>推荐理由：如果你已经在使用VSCode，那么无需额外下载其他Markdown编辑器，安装一个Markdown插件即可（<em>Markdown All in One</em>免费），基本语法与渲染功能齐全。目前插件的普通模式与富文本模式切换，多主题支持，图片云存储没有同为本地编辑器的Typora俱全。但使用VSCode编写Markdown文档，可以结合Git功能很好的进行版本控制，修改记录等。</p>
+<h2 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h2><p>以上就是Markdown的基础介绍与工具推荐，如果感觉兴趣或想了解更多高级用法，也可以参考以下内容：</p>
+<p><a target="_blank" rel="noopener" href="https://www.markdownguide.org/hacks">Markdown高级技巧</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/html/index.asp">HTML 教程 (w3school.com.cn)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/css/index.asp">CSS 教程 (w3school.com.cn)</a></p>
+<p>&lt;\br&gt;<br><img alt="Medivh's Dirary" src="https://github.com/Jason-Gew/jason-gew.github.io/blob/prod/image/medivh-dirary.gif"/></p>
+
+        </div>
+
+
+        
+            <section class="post-copyright">
+                
+                
+                
+                    <p class="copyright-item">
+                        <span><i>License:</i></span>&nbsp;
+                        <span><a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                
+                    <span>
+                        <i>Visitors:</i>&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                
+                
+            </section>
+        
+        <br/>
+        
+        
+
+        <section class="post-tags">
+            <div>
+                <span>Tag:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Markdown/">#Markdown</a>
+                    
+                        <a href="/tags/HTML/">#HTML</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">Back</a>
+                <span>· </span>
+                <a href="/">Home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2021/11/Hadoop-MapReduce/">Hadoop MapReduce (分布式计算框架)</a>
+            
+        </section>
+
+        
+        
+        <div id="lv-container" style="text-align: center" data-id="city"
+             data-uid="MTAyMC81MTcyNC8yODIwNQ==">
+            <script type="text/javascript">
+                (function(d, s) {
+                    var j, e = d.getElementsByTagName(s)[0];
+                    if (typeof LivereTower === 'function') {
+                        return;
+                    }
+                    j = d.createElement(s);
+                    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                    j.async = true;
+                    e.parentNode.insertBefore(j, e);
+                })(document, 'script');
+            </script>
+        </div>
+        
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+		<span>© <a href="/">Jason Ge Wu</a>&nbsp;&nbsp;|&nbsp;&nbsp;Powered by
+        	<a href="https://hexo.io" target="_blank">Hexo</a>
+        </span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
