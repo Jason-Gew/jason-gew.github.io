@@ -119,9 +119,8 @@
     }
 </script>
         <div class="main">
-            <script src="//code.bdstatic.com/npm/leancloud-storage@4.12.2/dist/av-min.js"></script>
-<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-<!--<script src="/js/busuanzi.pure.js"></script>-->
+            <script src="//cdn.bootcdn.net/ajax/libs/twikoo/1.6.10/twikoo.all.min.js"></script>
+
 <div class="container">
     <div class="post-wrap">
         <h2 class="post-title" ondragstart="return false;" onContextMenu="return false;" style="text-align: center;
@@ -171,22 +170,17 @@
             </span>
         </div>
         <br/>
-        <div id="vcomments" >
+
+        <div id="t_comment">
         </div>
-        <script async="async">
-            new Valine({
-                el: '#vcomments',
+        <script>
+            twikoo.init({
+                envId: 'https://twikoo-comment-flax.vercel.app',
+                el: '#t_comment',
                 path: window.location.pathname,
-                appId: 'xavRfmuNYmLco6QK1YiAB9h1-MdYXbMMI',
-                appKey: 'I0VsWAoacf86m5rNoGvhChfE',
-                lang: 'en',
-                avatar: 'robohash',
-                placeholder: 'Please leave your message...',
-                enableQQ: true,
-                requiredFields: ['nick','mail'],
+                lang: 'en-US',
                 visitor: true,
-                serverURLs: 'https://xavrfmun.api.lncldglobal.com'
-            });
+            })
         </script>
     </div>
 </div>
